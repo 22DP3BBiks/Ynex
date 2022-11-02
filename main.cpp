@@ -2,8 +2,8 @@
 #include <iostream>
 #include "./compiler.h"
 
-int main(int _, char *args[]) {
-    std::cout << _ << " " << args[1] << " " << args[2] << std::endl;
+int main(int count, char *args[]) {
+    std::cout << count << " " << args[1] << " " << args[2] << std::endl;
     if (!args[1]) {
         throw std::invalid_argument("Expected code file!");
     }
