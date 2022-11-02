@@ -1,0 +1,5 @@
+let foo = 10;
+while(foo>0){
+    out("Foo bigger then 0");
+    foo = foo - 1;
+}

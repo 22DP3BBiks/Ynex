@@ -7,7 +7,7 @@ void resize(std::string *&arr, int &size, int amount){
     }else{
         ++size;
     }
-    std::string *temp = new std::string[size];
+    auto *temp = new std::string[size];
     for (size_t i = 0; i<size-amount;++i){
         temp[i] = arr[i];
     }
@@ -82,9 +82,9 @@ bool expression(std::string *data, int &index, std::string *var, int size){
     }
 }
 
-void parser(std::string *data){
+std::string *parser(std::string *data){
     int size = 0;
-    std::string *val = new std::string[size];
+    auto *val = new std::string[size];
     int index = -2;
     while(!check(data, index, "Token.EOF")){
         if (check(data, index, "Token.COMMENT") || check(data, index, "Token.CLOSEBRACE")) continue;
@@ -105,9 +105,10 @@ void parser(std::string *data){
                             }
                         }
                     }else{
-                        resize(val, size, 2);
-                        val[size-2] = data[index-3];
-                        val[size-1] = data[index-1];
+                        resize(val, size, 3);
+                        val[size-3] = data[index-3];
+                        val[size-2] = data[index-1];
+                        val[size-1] = "0";
                         if(!check(data, index, "Token.ENDLINE")) throw std::invalid_argument("Invalid statement at: "+ (index == -2 ? "0, data: "+data[0]+" ("+data[0]+")" : std::to_string(index/2+1)+", data: "+data[index+1]+" ("+data[index]+")"));
                     }
                 }else{
@@ -174,5 +175,4 @@ void parser(std::string *data){
             throw std::invalid_argument("Invalid statement at: "+ (index == -2 ? "0, data: "+data[0]+" ("+data[0]+")" : std::to_string(index/2+1)+", data: "+data[index+1]+" ("+data[index]+")"));
         }
     }
-    throw std::invalid_argument("Invalid statement at: "+ (index == -2 ? "0, data: "+data[0]+" ("+data[0]+")" : std::to_string(index/2+1)+", data: "+data[index+1]+" ("+data[index]+")"));
 }

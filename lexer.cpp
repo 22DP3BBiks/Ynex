@@ -66,7 +66,7 @@ std::string *lexer(std::string data, int &size){
         } else if (l == '/') {
             if (data.length() > currCharPosition && data.at(currCharPosition + 1) == '/') {
                 std::string comment;
-                while (data.length() >= currCharPosition && data.at(currCharPosition) != '\n') {
+                while (data.length() != currCharPosition && data.at(currCharPosition) != '\n') {
                     comment+=data.at(currCharPosition++);
                 }
                 resize(lexData, 2);

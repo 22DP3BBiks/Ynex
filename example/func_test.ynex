@@ -1,0 +1,4 @@
+foo(){
+    out("Running funciton");
+}
+foo();

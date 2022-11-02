@@ -3,16 +3,16 @@
 #include "./compiler.h"
 
 int main(int _, char *args[]) {
+    std::cout << _ << " " << args[1] << " " << args[2] << std::endl;
     if (!args[1]) {
         throw std::invalid_argument("Expected code file!");
     }
     std::ifstream code(args[1]);
-    if (!args[2]) args[2] = (char*)"./main";
-    std::ofstream com(args[2], std::ios::out /*| std::ios::trunc*/);
-
     if (!code.is_open()) {
         throw std::invalid_argument("Couldn't open code file!");
     }
+    if (!args[2]) args[2] = (char*)"./main";
+    std::ofstream com(args[2], std::ios::out /*| std::ios::trunc*/);
     if (!com.is_open()) {
         throw std::invalid_argument("Couldn't open or make compiled file!");
     }
@@ -25,12 +25,13 @@ int main(int _, char *args[]) {
         std::cout << lextedData[i] << std::endl;
     }
     std::cout << "Lexing completed." << std::endl;
-    parser(lextedData);
+    std::string *parserData = parser(lextedData);
     std::cout << "Parsing completed." << std::endl;
-    emitter(com, lextedData);
+    emitter(com, parserData);
     std::cout << "Emitting completed." << std::endl;
     std::cout << "Compiling completed." << std::endl;
     delete[] lextedData;
+    delete[] parserData;
     code.close();
     com.close();
     return  0;
